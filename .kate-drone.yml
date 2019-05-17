@@ -1,5 +1,5 @@
 kind: pipeline
-name: kate-drone
+name: default
 
 steps:
 - name: build
