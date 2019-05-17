@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: drone-deployment
+spec:
+  selector:
+    matchLabels:
+      name: drone-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: drone-deployment
+    spec:
+      containers:
+        - name: drone
+          image: drone/drone:1.0.0
+          env:
+            - name: DRONE_KUBERNETES_ENABLED
+              value: "true"
+            - name: DRONE_KUBERNETES_NAMESPACE
+              value: default
+            - name: DRONE_GITHUB_SERVER
+              value: https://github.com
+            - name: DRONE_GITHUB_CLIENT_ID
+              value: 27109b3b4dc9d14dc328
+            - name: DRONE_GITHUB_CLIENT_SECRET
+              value: 1db08bc758e4f6bb41cf20b9c2ab99f370eec5f4
+            - name: DRONE_RPC_SECRET
+              value: 4e695d5f7393e7f838d6ee66c358c1bb
+            - name: DRONE_SERVER_HOST
+              value: 35.196.248.184
+            - name: DRONE_SERVER_PROTO
+              value: http
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: drone-service
+spec:
+  selector:
+    name: drone-deployment
+  ports:
+    - name: "80"
+      port: 80
+      targetPort: 80
+    - name: "443"
+      port: 443
+      targetPort: 443
+  type: LoadBalancer
