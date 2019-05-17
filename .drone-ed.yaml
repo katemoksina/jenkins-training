@@ -29,7 +29,7 @@ spec:
             - name: DRONE_RPC_SECRET
               value: 4e695d5f7393e7f838d6ee66c358c1bb
             - name: DRONE_SERVER_HOST
-              value: 35.233.190.148
+              value: 34.83.112.49
             - name: DRONE_SERVER_PROTO
               value: http
           ports:
